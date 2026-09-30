@@ -1,0 +1,2 @@
+- Hadrien Huvelle \<<hadrien.huvelle@camptocamp.com>\>
+- Don Kendall \<<dkendall@ledoweb.com>\>
