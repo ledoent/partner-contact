@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Ledo Enterprises
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo noupdate="1">
+    <!-- Shipped inactive: activate the ones that fit your data. -->
+    <record id="rule_contact_email" model="deduplicate.rule">
+        <field name="name">Contacts with the same e-mail</field>
+        <field name="res_model_id" ref="base.model_res_partner" />
+        <field name="active" eval="False" />
+        <field
+            name="line_ids"
+            eval="[(0, 0, {'field_id': ref('base.field_res_partner__email'), 'match_mode': 'email'})]"
+        />
+    </record>
+    <record id="rule_contact_name_company" model="deduplicate.rule">
+        <field name="name">Same name under the same company</field>
+        <field name="res_model_id" ref="base.model_res_partner" />
+        <field name="active" eval="False" />
+        <field name="domain">[('parent_id', '!=', False)]</field>
+        <field
+            name="line_ids"
+            eval="[(0, 0, {'field_id': ref('base.field_res_partner__name'), 'match_mode': 'ci'}), (0, 0, {'field_id': ref('base.field_res_partner__parent_id'), 'match_mode': 'exact'})]"
+        />
+    </record>
+</odoo>

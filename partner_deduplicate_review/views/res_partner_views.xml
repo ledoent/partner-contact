@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Ledo Enterprises
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="action_deduplicate_group_contacts" model="ir.actions.act_window">
+        <field name="name">Duplicate Contacts</field>
+        <field name="res_model">deduplicate.group</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('res_model_name', '=', 'res.partner')]</field>
+        <field
+            name="search_view_id"
+            ref="base_deduplicate_review.view_deduplicate_group_search"
+        />
+        <field name="context">{'search_default_to_review': 1}</field>
+    </record>
+    <menuitem
+        id="menu_deduplicate_contacts"
+        name="Duplicates"
+        parent="contacts.menu_contacts"
+        action="action_deduplicate_group_contacts"
+        sequence="30"
+        groups="base_deduplicate_review.group_deduplicate_reviewer"
+    />
+    <!-- Contacts selected in a list become one group to review, instead of
+         going straight to the core merge wizard. -->
+    <record id="action_review_selected_contacts" model="ir.actions.server">
+        <field name="name">Review as Duplicates</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="binding_model_id" ref="base.model_res_partner" />
+        <field name="binding_view_types">list,kanban</field>
+        <field
+            name="group_ids"
+            eval="[(4, ref('base_deduplicate_review.group_deduplicate_reviewer'))]"
+        />
+        <field name="state">code</field>
+        <field name="code">action = records._deduplicate_review_selection()</field>
+    </record>
+</odoo>

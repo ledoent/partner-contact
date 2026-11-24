@@ -1,0 +1,1 @@
+odoo-addon-base_deduplicate_review @ git+https://github.com/ledoent/server-tools.git@20.0-add-dedup-review#subdirectory=base_deduplicate_review
